@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="setContent(title,content)">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title th:text="${title}"></title>
+
+    <!-- Custom fonts for this template-->
+    <link th:href="@{/pages/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    <!-- Bootstrap core JavaScript-->
+    <script th:src="@{/pages/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/pages/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script th:src="@{/pages/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script th:src="@{/pages/js/sb-admin-2.min.js}"></script>
+
+    <!-- Custom styles for this template-->
+    <link th:href="@{/pages/css/sb-admin-2.min.css}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/main">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <img th:src="@{/images/jkpop.png}"
+                         alt="" />
+                </div>
+                <div class="sidebar-brand-text mx-3"><sup>日韓</sup><br>JK POP </div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="/main">
+                    <i class="fa-solid fa-house"></i>
+                    <span>HOME</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Album
+            </div>
+
+            <!-- K-POP -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKorea"
+                   aria-expanded="true" aria-controls="collapseKorea">
+                    <i class="fa-solid fa-music"></i>
+                    <span>K-POP</span>
+                </a>
+                <div id="collapseKorea" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">韓国アーティスト:</h6>
+                        <a class="collapse-item" href="/album/korea?year=2020">２０２０年代</a>
+                        <a class="collapse-item" href="/album/korea?year=2010">２０１０年代</a>
+                        <a class="collapse-item" href="/album/korea?year=2000">２０００年代</a>
+                        <a class="collapse-item" href="/album/korea?year=1990">１９９０年代</a>
+                    </div>
+                </div>
+            </li> <!-- J-POP -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseJapan"
+                   aria-expanded="true" aria-controls="collapseJapan">
+                    <i class="fa-solid fa-music"></i>
+                    <span>J-POP</span>
+                </a>
+                <div id="collapseJapan" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">日本アーティスト</h6>
+                        <a class="collapse-item" href="/album/japan?year=2020">２０２０年代</a>
+                        <a class="collapse-item" href="/album/japan?year=2010">２０１０年代</a>
+                        <a class="collapse-item" href="/album/japan?year=2000">２０００年代</a>
+                        <a class="collapse-item" href="/album/japan?year=1990">１９９０年代</a>
+                    </div>
+                </div>
+            </li>
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="/board/list">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>掲示板</span></a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Addons
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                   aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>User</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Login Screens:</h6>
+                        <sec:authorize access="isAnonymous()">
+                            <a class="collapse-item" href="/user/login"> <i class="fas fa-sign-in-alt fa-sm fa-fw mr-2 text-gray-400"></i>Login</a>
+                        </sec:authorize>
+                        <sec:authorize access="isAuthenticated()">
+                            <form id="logoutForm" action="/logout" method="POST">
+                                <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+                                <button class="dropdown-item logoutBtn" >
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </button>
+                            </form>
+                        </sec:authorize>
+                        <a class="collapse-item" href="/user/register">Register</a>
+                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span></span></a>
+            </li>
+
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <sec:authorize access="isAuthenticated()">
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <a class="nav-link " href="/user/likeAlbum" >
+                                    <i class="fa-solid fa-heart"></i>
+                                    <span class="badge badge-danger badge-counter1">お気に入り</span>
+                                </a>
+                            </li>
+                        </sec:authorize>
+
+
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <sec:authorize access="isAuthenticated()">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">${pinfo.username }</span>
+                                </sec:authorize>
+                                <img class="img-profile rounded-circle"
+                                     src="">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                 aria-labelledby="userDropdown">
+                                <sec:authorize access="isAuthenticated()">
+                                    <a class="dropdown-item" href="/user/changePw">
+                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        パスワード変更
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                </sec:authorize>
+                                <sec:authorize access="isAnonymous()">
+                                    <a class="dropdown-item" href="/user/login">
+                                        <i class="fas fa-sign-in-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Login</a>
+                                </sec:authorize>
+                                <sec:authorize access="isAuthenticated()">
+                                    <form id="logoutForm" action="/logout" method="POST">
+                                        <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+                                        <button class="dropdown-item logoutBtn" >
+                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Logout
+                                        </button>
+                                    </form>
+                                </sec:authorize>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                   <th:block th:replace="${content}"></th:block>
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2021</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Page level plugins -->
+
+    <!-- Page level custom scripts -->
+
+</body>
+</th:block>
+</html>

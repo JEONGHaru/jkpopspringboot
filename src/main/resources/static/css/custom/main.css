@@ -1,0 +1,50 @@
+
+.carousel-item > img {
+    height: 500px;
+}
+
+.mainCard {
+    left: -1000px;
+}
+
+.card-img-top {
+    height: 200px;
+}
+
+@keyframes kSlide {
+    from {
+        left: -100px;
+        opacity: 0;
+    }
+
+    to {
+        left: 100px;
+        opacity: 1;
+    }
+}
+
+@keyframes disappear {
+    from {
+        left: 150px;
+        opacity: 1;
+    }
+    to {
+        left: -100px;
+        opacity: 0;
+    }
+}
+
+.mainJapanCard {
+    right: -100px;
+}
+
+@keyframes jSlide {
+    from {
+        right: -100px;
+        opacity: 0;
+    }
+
+    to {
+        right: 100px;
+    }
+}

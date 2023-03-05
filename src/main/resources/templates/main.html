@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/custom/main.css}">
+<script th:inline="javascript">
+    $(function () {
+        let mainCard = $(".mainCard");
+        let mainJapanCard = $(".mainJapanCard");
+        //$(mainKoreaCard).css("display","none");
+        $(window).scroll(function () {
+            let value = $(document).scrollTop();
+            //console.log(value);
+            if (value > 200) {
+                $(mainCard).css("animation", "kSlide 2s ease-out forwards");
+                $(window).scroll(function () {
+                    let value = $(document).scrollTop();
+                    if (value < 200) $(mainCard).css("animation", "disappear 1s ease-out forwards");
+                })
+            }
+            //else $(mainKoreaCard).css("animation","disappear 2s ease-out forwards");
+        })
+
+
+    });//function -- end
+</script>
+<th:block th:replace="~{/layout/basic :: setContent('HOME',~{this::content})}">
+    <th:block th:fragment="content">
+        <h1>Main Page</h1>
+        <div class="container py-4">
+            <div class="row mt-4">
+                <div class="col-sm-5">
+                    <div class="fs-1">
+                        韓アーティスト
+                    </div>
+                    <div class="carousel slide"
+                         data-bs-ride="carousel">
+                        <div class="carousel-inner ">
+                            <div class="carousel-item active" data-bs-interval="2000">
+                                <img src="/album/display?fileName=${kList.get(0).uploadPath }/${kList.get(0).fileName}"
+                                     class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item ">
+                                <img src="/album/display?fileName=${kList.get(1).uploadPath }/${kList.get(1).fileName}"
+                                     class="d-block w-100"
+                                     alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="/album/display?fileName=${kList.get(2).uploadPath }/${kList.get(2).fileName}"
+                                     class="d-block w-100 lesse"
+                                     alt="...">
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-5 offset-sm-2">
+                    <div class="fs-1">
+                        日アーティスト
+                    </div>
+
+                    <div class="carousel slide"
+                         data-bs-ride="carousel">
+                        <div class="carousel-inner badge border p-2">
+                            <div class="carousel-item active" data-bs-interval="2000">
+                                <img src="/album/display?fileName=${jList.get(0).uploadPath }/${jList.get(0).fileName}"
+                                     class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="/album/display?fileName=${jList.get(1).uploadPath }/${jList.get(1).fileName}"
+                                     class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="/album/display?fileName=${jList.get(2).uploadPath }/${jList.get(2).fileName}"
+                                     class="d-block w-100" alt="...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        </div>
+        <div class="container-fluid my-3 bg-primary">
+            <div class="row">
+                <c:forEach begin="0" end="2" var="k" items="${kList}">
+                    <div class="card shadow mainCard sm-12 mx-1" style="width: 18rem;">
+                        <img src="/album/display?fileName=${k.uploadPath }/${k.fileName}"
+                             class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <p class="card-text">${fn:substringBefore(k.fileName,'.') }</p>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
+        <div class="container-fluid my-3 bg-danger">
+            <div class="row">
+                <c:forEach begin="0" end="2" var="j" items="${jList}">
+                    <div class="card shadow mainCard sm-12 mx-1" style="width: 18rem;">
+                        <img src="/album/display?fileName=${j.uploadPath }/${j.fileName}"
+                             class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <p class="card-text">${fn:substringBefore(j.fileName,'.') }</p>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
+    </th:block>
+</th:block>

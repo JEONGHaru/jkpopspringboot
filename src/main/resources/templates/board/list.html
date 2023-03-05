@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<style>
+    ul {
+        list-style: none;
+    }
+    a:hover {
+        text-decoration: none !important;
+        cursor: pointer;
+    }
+</style>
+
+<th:block th:replace="~{/layout/basic :: setContent('BoardList',~{this::content})}">
+    <th:block th:fragment="content">
+        <h1>Board List Page</h1>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h3 class="m-0 font-weight-bold text-gray"> 掲示板</h3>
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div class="row mb-2">
+                        <div class="col-lg-12">
+                            <a th:href="@{register}" class="btn btn-primary btn-icon-split float-right">
+                                <span class="icon text-white-50"><i class="fa-solid fa-pen"></i></span>
+                                <span class="text">作成</span>
+                            </a>
+                        </div>
+                    </div>
+                    <form action="list" method="get" id="searchForm">
+                        <div class="input-group">
+                            <input type="hidden" name="page" value="1">
+                            <div class="input-group-append">
+                                <select class="custom-select" name="type">
+                                    <option th:selected="${pageRequestDTO.type == null}">-----</option>
+                                    <option value="t" th:selected="${pageRequestDTO.type == 't'}">タイトル</option>
+                                    <option value="c" th:selected="${pageRequestDTO.type == 'c'}">内容</option>
+                                    <option value="w" th:selected="${pageRequestDTO.type == 'w'}">作成者</option>
+                                    <option value="tc" th:selected="${pageRequestDTO.type == 'tc'}">タイトル+内容</option>
+                                    <option value="tcw" th:selected="${pageRequestDTO.type == 'tcw'}">タイトル+内容+作成者</option>
+                                </select>
+                            </div>
+                            <input class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}">
+                            <div class="input-group-append" id="button-addon4">
+                                <button class="btn btn-secondary btn-search" type="button">検索</button>
+                                <button class="btn btn-outline-secondary btn-clear" type="button">クリア</button>
+                            </div>
+                        </div>
+                    </form>
+                    <table class="table table-bordered table-hover" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>#NO</th>
+                            <th>#タイトル</th>
+                            <th>#作成者</th>
+                            <th>#日付</th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th>#NO</th>
+                            <th>#タイトル</th>
+                            <th>#作成者</th>
+                            <th>#日付</th>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+                            <tr th:each="dto : ${result.dtoList}">
+                                <td>[[${dto.bno}]]</td>
+                                <td><a th:href="@{read(bno=${dto.bno},page=${result.page},type=${pageRequestDTO.type},
+                                keyword=${pageRequestDTO.keyword})}">
+                                    [[${dto.title}]] --------- [<b th:text="${dto.replyCount}"></b>]</a></td>
+                                <td>[[${dto.writerName}]]</td>
+                                <td>
+                                    [[${#temporals.format(dto.regDate,'yyyy/MM/dd')}]]
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+
+                                <ul class="pagination justify-content-center align-items-center">
+                                        <li class="paginate_button previous page-item" th:if="${result.prev}">
+                                            <a class="page-link" th:href="@{list(page=${result.start -1},type=${pageRequestDTO.type},
+                                            keyword=${pageRequestDTO.keyword})}">prev</a>
+                                        </li>
+                                        <li th:class="'paginate_button page-item '+ ${result.page == page ? 'active':''} "
+                                        th:each="page : ${result.pageList}">
+                                            <a class="page-link" th:href="@{list(page=${page},type=${pageRequestDTO.type},
+                                            keyword=${pageRequestDTO.keyword})}">[[${page}]]</a>
+                                        </li>
+                                        <li class="paginate_button previous page-item" th:if="${result.next}">
+                                            <a class="page-link" th:href="@{list(page=${result.end +1},type=${pageRequestDTO.type},
+                                            keyword=${pageRequestDTO.keyword})}">next</a>
+                                        </li>
+                                </ul>
+                </div>
+            </div>
+        </div>
+        <script th:inline="javascript">
+            let msg = [[${msg}]];
+            //console.log(msg);
+            if(msg){
+                $(".modal").modal();
+            }
+
+            let searchForm = $("#searchForm");
+            $(".btn-search").click(function (){
+                //alert("searchBtn click");
+                searchForm.submit();
+            }); //searchBtn click --- end
+
+            $(".btn-clear").click(function (){
+                //alert("clearBtn click");
+                searchForm.empty().submit();
+            }); //clearBtn click --- end
+        </script>
+    </th:block>
+</th:block>
